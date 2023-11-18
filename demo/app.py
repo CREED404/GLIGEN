@@ -43,7 +43,7 @@ args = parse_option()
 
 def load_from_hf(repo_id, filename='diffusion_pytorch_model.bin'):
     cache_file = hf_hub_download(repo_id=repo_id, filename=filename)
-    return torch.load(cache_file, map_location='cpu')
+    return torch.load(cache_file, map_location=device) if device != "cuda" else torch.load(cache_file)
 
 def load_ckpt_config_from_hf(modality):
     ckpt = load_from_hf(f'gligen/{modality}')
